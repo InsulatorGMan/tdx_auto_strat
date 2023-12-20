@@ -20,6 +20,7 @@ local Towers = loadstring(game.HttpService:GetAsync(BaseGetURL..'Enum/Towers.lua
 TDX_AutoStrat.Debug = false
 TDX_AutoStrat.WorkSpaceFolder = 'TDX_AutoStrat'
 TDX_AutoStrat.StrategyFolder = 'Strategy'
+TDX_AutoStrat.RemotesFolder = ReplicatedStorage:WaitForChild('Remotes')
 
 -- // Initializes the workspace folders.
 function TDX_AutoStrat:Init()
