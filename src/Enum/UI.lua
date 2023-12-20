@@ -19,7 +19,7 @@ return {
     },
     ['BottomBar'] = {
         ['Base'] = Interface:WaitForChild('BottomBar'),
-        ['TowersBar'] = Interface:WaitForChild('BottomBar'):WaitForChild('TowersBar'),
+        -- ['TowersBar'] = Interface:WaitForChild('BottomBar'):WaitForChild('TowersBar'),
         ['Cash'] = Interface:WaitForChild('BottomBar'):WaitForChild('CashFrame'):WaitForChild('Text')
     }
 }

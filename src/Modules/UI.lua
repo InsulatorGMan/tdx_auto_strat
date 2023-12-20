@@ -46,6 +46,7 @@ function UI:MakeWidget(title, size)
     WidgetRootFrame.Size = UDim2.new(0, size[0], 0, 50)
     WidgetRootFrame.BackgroundColor3 = UI.Theme.Default.Elements
                                            .BaseWidgetBackground
+    WidgetRootFrame.BorderSizePixel = 0
     WidgetTitleBackgroundFrame.Size = UDim2.new(0, size[0], 0, size[1])
     WidgetTitleBackgroundFrame.BorderSizePixel = 0
     WidgetTitleBackgroundFrame.BackgroundColor3 =

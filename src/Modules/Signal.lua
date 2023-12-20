@@ -15,9 +15,7 @@ local function acquireRunnerThreadAndCallEventHandler(fn, ...)
 end
 
 local function runEventHandlerInFreeThread()
-    while true do
-        acquireRunnerThreadAndCallEventHandler(coroutine.yield())
-    end
+    while true do acquireRunnerThreadAndCallEventHandler(coroutine.yield()) end
 end
 
 local Connection = {}
@@ -39,29 +37,23 @@ function Connection:Disconnect()
         self._signal._handlerListHead = self._next
     else
         local prev = self._signal._handlerListHead
-        while prev and prev._next ~= self do
-            prev = prev._next
-        end
-        if prev then
-            prev._next = self._next
-        end
+        while prev and prev._next ~= self do prev = prev._next end
+        if prev then prev._next = self._next end
     end
 end
 
 setmetatable(Connection, {
     __index = function(tb, key)
-        error(("Attempt to get Connection::%s (not a valid member)"):format(tostring(key)), 2)
+        error(("Attempt to get Connection::%s (not a valid member)"):format(
+                  tostring(key)), 2)
     end,
     __newindex = function(tb, key, value)
-        error(("Attempt to set Connection::%s (not a valid member)"):format(tostring(key)), 2)
+        error(("Attempt to set Connection::%s (not a valid member)"):format(
+                  tostring(key)), 2)
     end
 })
 
-function Signal.new()
-    return setmetatable({
-        _handlerListHead = false
-    }, Signal)
-end
+function Signal.new() return setmetatable({_handlerListHead = false}, Signal) end
 
 function Signal:Connect(fn)
     local connection = Connection.new(self, fn)
@@ -74,9 +66,7 @@ function Signal:Connect(fn)
     return connection
 end
 
-function Signal:DisconnectAll()
-    self._handlerListHead = false
-end
+function Signal:DisconnectAll() self._handlerListHead = false end
 
 function Signal:Fire(...)
     local item = self._handlerListHead
@@ -105,9 +95,7 @@ end
 function Signal:Once(fn)
     local cn;
     cn = self:Connect(function(...)
-        if cn._connected then
-            cn:Disconnect()
-        end
+        if cn._connected then cn:Disconnect() end
         fn(...)
     end)
     return cn
@@ -115,10 +103,12 @@ end
 
 setmetatable(Signal, {
     __index = function(tb, key)
-        error(("Attempt to get Signal::%s (not a valid member)"):format(tostring(key)), 2)
+        error(("Attempt to get Signal::%s (not a valid member)"):format(
+                  tostring(key)), 2)
     end,
     __newindex = function(tb, key, value)
-        error(("Attempt to set Signal::%s (not a valid member)"):format(tostring(key)), 2)
+        error(("Attempt to set Signal::%s (not a valid member)"):format(
+                  tostring(key)), 2)
     end
 })
 

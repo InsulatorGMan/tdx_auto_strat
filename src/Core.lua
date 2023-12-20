@@ -49,16 +49,19 @@ local function WaitForRequiredMoney(money, callback)
     moneySignal:Connect(callback)
     UI.BottomBar.Cash.Changed:Connect(function()
         if UI.BottomBar.Cash.Text:gsub("%s", ""):gsub("$", "") >= money then
-            Signal:Fire()
-            Signal:Disconnect()
+            moneySignal:Fire()
+            moneySignal:Disconnect()
         end
     end)
 end
 
-local function WaitForWaveChange(callback)
+TDX_AutoStrat.WaitForWaveChange = function(callback)
     local waveChangeSignal = Signal.new()
     waveChangeSignal:Connect(callback)
-    UI.GameInfoBar.Wave.Changed:Connect(function() end)
+    UI.GameInfoBar.Wave.Changed:Connect(function()
+        waveChangeSignal:Fire()
+        waveChangeSignal:Disconnect()
+    end)
 end
 
 -- // Places a tower onto the battlefield.
@@ -122,6 +125,6 @@ end
 
 -- // Core game player.
 TDX_AutoStrat.PlayGame = function(commands)
-    for i, command in pairs(commands) do end
+    for i, command in pairs(commands) do command() end
 end
 return TDX_AutoStrat
