@@ -5,15 +5,16 @@
 ]] local TDX_AutoStrat = {}
 
 -- // Modules
-local Signal = require('Modules/Signal.lua')
-local FileSystem = require('Modules/FileSystem.lua')
+local BaseGetURL = "https://raw.githubusercontent.com/InsulatorGMan/tdx_auto_strat/main/src/"
+local Signal = loadstring(game.HttpService:GetAsync(BaseGetURL..'Modules/Signal.lua'))()
+local FileSystem = loadstring(game.HttpService:GetAsync(BaseGetURL..'Modules/FileSystem.lua'))()
 
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Workspace = game:GetService('Workspace')
 local Players = game:GetService('Players')
 
-local UI = require('Enum/UI.lua')
-local Towers = require('Enum/Towers.lua')
+local UI = loadstring(game.HttpService:GetAsync(BaseGetURL..'Enum/UI.lua'))()
+local Towers = loadstring(game.HttpService:GetAsync(BaseGetURL..'Enum/Towers.lua'))()
 
 -- // Environment Variables
 TDX_AutoStrat.Debug = false
