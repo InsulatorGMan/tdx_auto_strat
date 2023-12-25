@@ -1,20 +1,20 @@
 --[[
-    Tower Defense X Autostrategy - Core.lua
+    Tower Defense X Autostrategy - Core_Game.lua
     InsulatorGMan
-    Version 1.0.0
+    Version 1.0.1
 ]] local TDX_AutoStrat = {}
 
 -- // Modules
-local BaseGetURL = "https://raw.githubusercontent.com/InsulatorGMan/tdx_auto_strat/main/src/"
-local Signal = loadstring(game.HttpService:GetAsync(BaseGetURL..'Modules/Signal.lua'))()
-local FileSystem = loadstring(game.HttpService:GetAsync(BaseGetURL..'Modules/FileSystem.lua'))()
+local BaseGetURL =
+    "https://raw.githubusercontent.com/InsulatorGMan/tdx_auto_strat/main/src/"
+local Signal = loadstring(game.HttpService:GetAsync(BaseGetURL ..
+                                                        'Modules/Signal.lua'))()
 
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
-local Workspace = game:GetService('Workspace')
-local Players = game:GetService('Players')
 
-local UI = loadstring(game.HttpService:GetAsync(BaseGetURL..'Enum/UI.lua'))()
-local Towers = loadstring(game.HttpService:GetAsync(BaseGetURL..'Enum/Towers.lua'))()
+local UI = loadstring(game.HttpService:GetAsync(BaseGetURL .. 'Enum/UI.lua'))()
+local Towers = loadstring(game.HttpService:GetAsync(BaseGetURL ..
+                                                        'Enum/Towers.lua'))()
 
 -- // Environment Variables
 TDX_AutoStrat.Debug = false
@@ -22,26 +22,6 @@ TDX_AutoStrat.WorkSpaceFolder = 'TDX_AutoStrat'
 TDX_AutoStrat.StrategyFolder = 'Strategy'
 TDX_AutoStrat.RemotesFolder = ReplicatedStorage:WaitForChild('Remotes')
 
--- // Initializes the workspace folders.
-function TDX_AutoStrat:Init()
-    FileSystem.makeFolder(TDX_AutoStrat.WorkSpaceFolder)
-    FileSystem.makeFolder(TDX_AutoStrat.WorkSpaceFolder .. '/' ..
-                              TDX_AutoStrat.StrategyFolder)
-end
--- // Move the player's character into the lobby's trigger.
-local function JoinLobby(lobbyNumber)
-    local Player = Players.LocalPlayer.Character
-    Player:PivotTo(Workspace['APCs'][lobbyNumber]['APC'].Detector.CFrame)
-end
--- // Looks for the required lobby & automatically joins it when found.
-TDX_AutoStrat.SearchForGame = function(mapName)
-    local Lobbies = Workspace['APCs']:GetChildren()
-    for i, lobby in pairs(Lobbies) do
-        local LobbyScreen = lobby['mapdisplay']['screen']['displayscreen']
-        local Map = LobbyScreen['map'].Text
-        if Map == mapName then JoinLobby(lobby.Name) end
-    end
-end
 --[[
 Takes in the required money, and a callback function
 is fired when the required money is obtained.
@@ -70,7 +50,7 @@ end
 TDX_AutoStrat.PlaceTower = function(towerName, position)
     WaitForRequiredMoney(Towers[towerName][0],
                          TDX_AutoStrat.RemotesFolder:WaitForChild('PlaceTower')
-                             :FireServer(unpack({
+                             :InvokeServer(unpack({
             [1] = 0,
             [2] = towerName,
             [3] = position,
@@ -127,6 +107,12 @@ end
 
 -- // Core game player.
 TDX_AutoStrat.PlayGame = function(commands)
-    for i, command in pairs(commands) do command() end
+    for i, command in pairs(commands) do
+        command()
+        TDX_AutoStrat.WaitForWaveChange()
+        if TDX_AutoStrat.Debug then
+            print('Command Wave: ' .. i .. ' done.')
+        end
+    end
 end
 return TDX_AutoStrat
