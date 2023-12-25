@@ -19,7 +19,7 @@ TDX.PlayGame({
      function()
         TDX.VoteForDifficulty('Easy')
         TDX.Ready()
-        TDX.SpeedBoost()
+        TDX.SpeedBoost(true)
         print('0')
     end, function()
         TDX.PlaceTower('Shotgunner', Vector3.new(-180.39552307128906,
