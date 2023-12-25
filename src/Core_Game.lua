@@ -97,7 +97,7 @@ end
 -- // Core game player.
 TDX_AutoStrat.PlayGame = function(commandWaves)
     for i, commandWave in pairs(commandWaves) do
-        commandWave()
+        commandWaves[i]()
         print(commandWaves[i])
         TDX_AutoStrat.WaitForWaveChange(function()
             print('Command Wave: ' .. i .. ' done.')
