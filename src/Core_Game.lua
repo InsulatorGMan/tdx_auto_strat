@@ -7,8 +7,6 @@
 -- // Modules
 local BaseGetURL =
     "https://raw.githubusercontent.com/InsulatorGMan/tdx_auto_strat/main/src/"
-local Signal = loadstring(game.HttpService:GetAsync(BaseGetURL ..
-                                                        'Modules/Signal.lua'))()
 
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
 
@@ -27,23 +25,15 @@ Takes in the required money, and a callback function
 is fired when the required money is obtained.
 ]]
 local function WaitForRequiredMoney(money, callback)
-    local moneySignal = Signal.new()
-    moneySignal:Connect(callback)
     UI.BottomBar.Cash.Changed:Connect(function()
-        if UI.BottomBar.Cash.Text:gsub("%s", ""):gsub("$", "") >= money then
-            moneySignal:Fire()
-            moneySignal:Disconnect()
+        if tonumber(UI.BottomBar.Cash.Text:gsub("[%s$]", "")) >= money then
+            callback()
         end
     end)
 end
 
 TDX_AutoStrat.WaitForWaveChange = function(callback)
-    local waveChangeSignal = Signal.new()
-    waveChangeSignal:Connect(callback)
-    UI.GameInfoBar.Wave.Changed:Connect(function()
-        waveChangeSignal:Fire()
-        waveChangeSignal:Disconnect()
-    end)
+    UI.GameInfoBar.Wave.Changed:Connect(function() callback() end)
 end
 
 -- // Places a tower onto the battlefield.
