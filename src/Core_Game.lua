@@ -40,14 +40,10 @@ end
 
 -- // Places a tower onto the battlefield.
 TDX_AutoStrat.PlaceTower = function(towerName, position)
-    WaitForRequiredMoney(Towers[towerName][0],
-                         TDX_AutoStrat.RemotesFolder:WaitForChild('PlaceTower')
-                             :InvokeServer(unpack({
-            [1] = 0,
-            [2] = towerName,
-            [3] = position,
-            [4] = 0
-        })))
+    WaitForRequiredMoney(Towers[towerName][0], function()
+        TDX_AutoStrat.RemotesFolder:WaitForChild('PlaceTower'):InvokeServer(
+            unpack({[1] = 0, [2] = towerName, [3] = position, [4] = 0}))
+    end)
 end
 -- // Upgrades the tower provided.
 TDX_AutoStrat.UpgradeTower = function(towerName, towerId, path)
