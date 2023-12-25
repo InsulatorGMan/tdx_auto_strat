@@ -20,6 +20,7 @@ TDX.PlayGame({
         TDX.VoteForDifficulty('Easy')
         TDX.Ready()
         TDX.SpeedBoost()
+        print('0')
     end, function()
         TDX.PlaceTower('Shotgunner', Vector3.new(-180.39552307128906,
                                                  -9.067782402038574,
@@ -28,7 +29,10 @@ TDX.PlayGame({
                                                  -9.067782402038574,
                                                  -658.4767456054688))
         TDX.UpgradeTower('Shotgunner', 2, 1)
-    end, function() TDX.UpgradeTower('Shotgunner', 2, 2) end
+        print('1')
+    end, function() TDX.UpgradeTower('Shotgunner', 2, 2)
+                    print('2') 
+    end
 })
 
 ```

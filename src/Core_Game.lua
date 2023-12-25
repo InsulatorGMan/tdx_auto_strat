@@ -98,6 +98,7 @@ end
 TDX_AutoStrat.PlayGame = function(commandWaves)
     for i, commandWave in pairs(commandWaves) do
         commandWave()
+        print(commandWaves[i])
         TDX_AutoStrat.WaitForWaveChange(function()
             print('Command Wave: ' .. i .. ' done.')
         end)
