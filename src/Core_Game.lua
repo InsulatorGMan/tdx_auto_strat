@@ -25,11 +25,13 @@ Takes in the required money, and a callback function
 is fired when the required money is obtained.
 ]]
 local function WaitForRequiredMoney(money, callback)
-    UI.BottomBar.Cash.Changed:Connect(function()
-        if tonumber(UI.BottomBar.Cash.Text:gsub("[%s$]", "")) >= money then
-            callback()
-        end
-    end)
+
+    local cleanedAmount = UI.BottomBar.Cash.Text:gsub("[%s$]", "")
+    local currentAmount = tonumber(cleanedAmount)
+
+    repeat wait() until currentAmount and currentAmount >= money
+
+    if currentAmount and currentAmount >= money then callback() end
 end
 
 TDX_AutoStrat.WaitForWaveChange = function(callback)
@@ -96,9 +98,9 @@ TDX_AutoStrat.SpeedBoost = function(state)
 end
 
 -- // Core game player.
-TDX_AutoStrat.PlayGame = function(commands)
-    for i, command in pairs(commands) do
-        command()
+TDX_AutoStrat.PlayGame = function(commandWaves)
+    for i, commandWave in pairs(commandWaves) do
+        commandWave()
         TDX_AutoStrat.WaitForWaveChange(function()
             print('Command Wave: ' .. i .. ' done.')
         end)
