@@ -30,7 +30,8 @@ local function WaitForRequiredMoney(money, callback)
     local currentAmount = tonumber(cleanedAmount)
 
     repeat wait() until currentAmount and currentAmount >= money
-
+    print(cleanedAmount)
+    print(currentAmount)
     if currentAmount and currentAmount >= money then callback() end
 end
 
