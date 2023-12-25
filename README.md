@@ -32,3 +32,14 @@ TDX.PlayGame({
 })
 
 ```
+
+### Lobby
+
+```lua
+print(1)
+local TDX = loadstring(game.HttpService:GetAsync(
+                           'https://raw.githubusercontent.com/InsulatorGMan/tdx_auto_strat/main/src/Core_Lobby.lua'))()
+print(2)
+TDX.SearchForGame('OIL RIG')
+print(3)
+```

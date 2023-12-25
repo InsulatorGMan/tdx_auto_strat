@@ -22,7 +22,7 @@ local Connection = {}
 Connection.__index = Connection
 
 function Connection.new(signal, fn)
-    return setmetatable({
+    return setmetatable(Connection,{
         _connected = true,
         _signal = signal,
         _fn = fn,
