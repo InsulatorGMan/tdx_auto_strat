@@ -95,13 +95,22 @@ TDX_AutoStrat.SpeedBoost = function(state)
 end
 
 -- // Core game player.
-TDX_AutoStrat.PlayGame = function(commandWaves)
-    for i, commandWave in pairs(commandWaves) do
-        commandWaves[i]()
-        print(commandWaves[i])
-        TDX_AutoStrat.WaitForWaveChange(function()
-            print('Command Wave: ' .. i .. ' done.')
-        end)
+TDX_AutoStrat.PlayGame = function(commandWaves, currentIndex)
+    currentIndex = currentIndex or 1
+
+    if currentIndex > #commandWaves then
+        print("All commands executed.")
+        return
     end
+
+    local commandWave = commandWaves[currentIndex]
+
+    commandWave()
+
+    TDX_AutoStrat.WaitForWaveChange(function()
+        print('Command Wave: ' .. currentIndex .. ' done.')
+        TDX_AutoStrat.PlayGame(commandWaves, currentIndex + 1)
+    end)
 end
+
 return TDX_AutoStrat
