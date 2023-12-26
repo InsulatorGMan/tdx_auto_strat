@@ -48,12 +48,11 @@ TDX_AutoStrat.PlaceTower = function(towerName, position)
 end
 -- // Upgrades the tower provided.
 TDX_AutoStrat.UpgradeTower = function(towerName, towerId, path)
-    WaitForRequiredMoney(Towers[towerName][0],
-                         TDX_AutoStrat.RemotesFolder:WaitForChild(
-                             'TowerUpgradeRequest'):FireServer(unpack({
-        [1] = towerId,
-        [2] = path
-    })))
+    WaitForRequiredMoney(Towers[towerName][0], function()
+
+        TDX_AutoStrat.RemotesFolder:WaitForChild('TowerUpgradeRequest')
+            :FireServer(unpack({[1] = towerId, [2] = path}))
+    end)
 end
 -- // Sells the provided tower.
 TDX_AutoStrat.SellTower = function(towerId)
